@@ -1,7 +1,7 @@
 {
-  "name": "spellingbr",
+  "name": "Jabbr",
   "version": "1.0.0",
-  "description": "Spelling Battle Royale",
+  "description": "A simple and quick face rigging tool",
   "main": "main.js",
   "scripts": {
     "scss": "node-sass css/dev/style.scss css/style.css",
