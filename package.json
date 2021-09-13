@@ -1,0 +1,23 @@
+{
+  "name": "spellingbr",
+  "version": "1.0.0",
+  "description": "Spelling Battle Royale",
+  "main": "main.js",
+  "scripts": {
+    "scss": "node-sass css/dev/style.scss css/style.css",
+    "watch": "nodemon -e scss -x \"npm run scss\"",
+    "start": "http-server -a localhost -p 8000"
+  },
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4",
+    "sass-loader": "^8.0.2"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.0",
+    "http-server": "^0.12.3",
+    "stimulus": "^1.1.1"
+  }
+}

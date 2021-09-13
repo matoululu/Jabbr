@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;700&display=swap');@import 'essential';
+@import 'animate';
+
+/* Variables
+============================================ */
+
+$bg: #3a3a4a;
+$greenscreen: lime;
+
+/* Basics
+============================================ */
+
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  background-color: $bg;
+  overflow-x: hidden;
+}
+
+body {
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include align-items(center);
+  @include justify-content(center);
+  color: white;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0px auto;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 600px;
+}
+
+
+button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  line-height: 1;
+
+  img {
+    height: 32px;
+  }
+}
+
+header {
+  @include flexbox();
+  @include justify-content(space-between);
+  @include align-items(center);
+  color:rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 1.5rem 0;
+  margin-top: 2.5rem;
+
+
+  a,
+  a:visited {
+    color:rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      color: rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+    }
+  }
+}
+
+sup {
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.green-screen__wrapper {
+  box-shadow:  0px 12px 24px -12px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow:  0px 12px 24px -12px rgba(0, 0, 0, 0.5);
+  border-radius: 0.75rem;
+}
+
+.green-screen {
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
+  background-color: $greenscreen;
+  width: 600px;
+  height: 600px;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  padding: 1rem;
+
+  img {
+    width: 100%;
+  }
+}
+
+.green-screen__bar {
+  @include flexbox();
+  @include justify-content(space-between);
+  @include align-items(center);
+  width: 600px;
+  background-color: #242424;
+  padding: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+
+.bar__buttons {
+  @include flexbox();
+  @include align-items(center);
+}
+
+.bar__slider {
+  @include flexbox();
+
+  p {
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.075);
+    margin-right: 1rem;
+    min-width: 15ch;
+    text-align: center;
+  }
+  input {
+    width: 100%;
+  }
+}

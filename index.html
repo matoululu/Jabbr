@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jabbr - Easy face rigging</title>
+  <link href="/images/favicon.png" rel="shortcut icon">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <div class="green-screen__wrapper">
+      <div class="green-screen">
+        <img src="images/silent.png" alt="" id="silent" class="silent">
+        <img src="images/talking.gif" alt="" id="talking" class="talking hidden">
+      </div>
+      <div class="green-screen__bar">
+        <div class="bar__buttons">
+          <button id="start">
+            <img src="images/play.svg" alt="Play">
+          </button>
+          <button id="stop" class="hidden">
+            <img src="images/pause.svg" alt="Pause">
+          </button>
+        </div>
+        <div class="bar__slider">
+          <p>Threshold: <span id="slidevalue">30</span></p>
+          <input type="range" min="1" max="100" value="30" class="slider" id="slider">
+        </div>
+      </div>
+    </div>
+    <header class="instructions">
+      <h1>Jabbr<sup>1.0</sup></h1>
+      <a href="https://matou.io" target="_blank">matou.io</p>
+    </header>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
