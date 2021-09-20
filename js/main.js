@@ -4,13 +4,64 @@ const slider = document.getElementById('slider');
 const currentCap = document.getElementById('slidevalue');
 const silentImage = document.getElementById('silent');
 const talkingImage = document.getElementById('talking');
+const holdingImage = document.getElementById('holding');
+const avgVolumeAllowance = 3;
 let volumeCallback = null;
 let volumeInterval = null;
 let volumeCap = slider.value;
 
+
+const voiceHandler = {
+  detectVolume: (volume, range) => {
+
+    // Determine if we're talking
+    if (volume > volumeCap) {
+      const avgRange = Math.floor(voiceHandler.getAverage(range));
+      animate.setState('talking')
+
+      // Determine if we're holding a note
+      if(volume >= (avgRange - avgVolumeAllowance) && volume <= (avgRange + avgVolumeAllowance)) {
+        animate.setState('holding');
+      }
+    } else {
+      animate.setState('silent');
+    }
+  },
+  getAverage: array => {
+    const average = array.reduce((a, b) => a + b) / array.length;
+    return average;
+  }
+}
+
+const animate = {
+  setState: state => {
+    switch (state) {
+      case 'silent':
+        silentImage.classList.remove('hidden');
+        talkingImage.classList.add('hidden');
+        holdingImage.classList.add('hidden');
+        break;
+      case 'talking':
+        talkingImage.classList.remove('hidden');
+        holdingImage.classList.add('hidden');
+        silentImage.classList.add('hidden');
+        break;
+      case 'holding':
+        holdingImage.classList.remove('hidden');
+        talkingImage.classList.add('hidden');
+        silentImage.classList.add('hidden');
+    }
+  }
+}
+
+
 const app = {
   init: async() => {
 
+    // Load all images and then set to default state
+    animate.setState('silent');
+
+    // Set current threshold cap
     app.setCurrentCap();
 
     try {
@@ -24,6 +75,7 @@ const app = {
       analyser.smoothingTimeConstant = 0.4;
       audioSource.connect(analyser);
       const volumes = new Uint8Array(analyser.frequencyBinCount);
+      let range = [0,0,0,0,0];
 
       volumeCallback = () => {
         analyser.getByteFrequencyData(volumes);
@@ -33,13 +85,13 @@ const app = {
           volumeSum += volume;
         }
 
-        const averageVolume = volumeSum / volumes.length;
-        if(averageVolume > volumeCap) {
-          console.log(averageVolume * 100 / 127);
-          app.isTalking(true);
-        } else {
-          app.isTalking(false);
-        }
+        // Get average volume and add to array
+        const averageVolume = Math.floor(volumeSum / volumes.length);
+        range.pop();
+        range.unshift(averageVolume);
+
+        // Handle volume information
+        voiceHandler.detectVolume(averageVolume, range);
 
       };
     } catch(e) {
@@ -50,15 +102,6 @@ const app = {
     startButton.classList.toggle('hidden');
     stopButton.classList.toggle('hidden');
   },
-  isTalking: bool => {
-    if(bool) {
-      silentImage.classList.add('hidden');
-      talkingImage.classList.remove('hidden');
-    } else {
-      silentImage.classList.remove('hidden');
-      talkingImage.classList.add('hidden');
-    }
-  },
   setCurrentCap: () => {
     currentCap.innerText = volumeCap;
   }
@@ -67,7 +110,6 @@ const app = {
 window.addEventListener('load', app.init);
 
 startButton.addEventListener('click', () => {
-  // Updating every 100ms (should be same as CSS transition speed)
   if(volumeCallback !== null && volumeInterval === null) {
     app.toggleInputs();
     volumeInterval = setInterval(volumeCallback, 100);
@@ -81,7 +123,7 @@ stopButton.addEventListener('click', () => {
     clearInterval(volumeInterval);
     volumeInterval = null;
     slider.disabled = false;
-    app.isTalking(false);
+    animate.setState('silent');
   }
 });
 

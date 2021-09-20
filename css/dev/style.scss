@@ -45,7 +45,7 @@ button {
   }
 }
 
-header {
+footer {
   @include flexbox();
   @include justify-content(space-between);
   @include align-items(center);
@@ -54,6 +54,14 @@ header {
   padding: 1.5rem 0;
   margin-top: 2.5rem;
 
+  ul {
+    list-style: none;
+
+    li {
+      display: inline-block;
+      margin-left: 1.5rem;
+    }
+  }
 
   a,
   a:visited {
