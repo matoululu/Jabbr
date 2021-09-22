@@ -5,7 +5,10 @@ const currentCap = document.getElementById('slidevalue');
 const silentImage = document.getElementById('silent');
 const talkingImage = document.getElementById('talking');
 const holdingImage = document.getElementById('holding');
+const yellingHoldingImage = document.getElementById('yelling-holding');
+const yellingImage = document.getElementById('yelling');
 const avgVolumeAllowance = 3;
+const faceImages = document.querySelectorAll('.face');
 let volumeCallback = null;
 let volumeInterval = null;
 let volumeCap = slider.value;
@@ -17,7 +20,16 @@ const voiceHandler = {
     // Determine if we're talking
     if (volume > volumeCap) {
       const avgRange = Math.floor(voiceHandler.getAverage(range));
-      animate.setState('talking')
+      animate.setState('talking');
+
+      if(volume > 100) {
+        animate.setState('yelling');
+
+        // Determine if we're holding a yelling note
+        if(volume >= (avgRange - avgVolumeAllowance) && volume <= (avgRange + avgVolumeAllowance)) {
+          animate.setState('yelling-holding');
+        }
+      }
 
       // Determine if we're holding a note
       if(volume >= (avgRange - avgVolumeAllowance) && volume <= (avgRange + avgVolumeAllowance)) {
@@ -35,21 +47,26 @@ const voiceHandler = {
 
 const animate = {
   setState: state => {
+    // Hide all face images
+    faceImages.forEach(face => {
+      face.classList.add('hidden');
+    });
+
     switch (state) {
       case 'silent':
         silentImage.classList.remove('hidden');
-        talkingImage.classList.add('hidden');
-        holdingImage.classList.add('hidden');
         break;
       case 'talking':
         talkingImage.classList.remove('hidden');
-        holdingImage.classList.add('hidden');
-        silentImage.classList.add('hidden');
+        break;
+      case 'yelling':
+        yellingImage.classList.remove('hidden');
+        break;
+      case 'yelling-holding':
+        yellingHoldingImage.classList.remove('hidden');
         break;
       case 'holding':
         holdingImage.classList.remove('hidden');
-        talkingImage.classList.add('hidden');
-        silentImage.classList.add('hidden');
     }
   }
 }

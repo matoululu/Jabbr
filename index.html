@@ -10,16 +10,28 @@
 <body>
 
   <aside>
-    <h2>Available faces:</h2>
+    <div class="faces__container">
+      <h2>Available faces:</h2>
+
+      <ul class="faces" id="faces">
+        <li class="active"><img src="images/face-placeholder.png" alt=""></li>
+        <li><img src="images/face-placeholder.png" alt=""></li>
+        <li><img src="images/face-placeholder.png" alt=""></li>
+        <li><img src="images/face-placeholder.png" alt=""></li>
+      </ul>
+
+    </div>
   </aside>
 
   <main>
     <div class="green-screen__wrapper">
 
       <div class="green-screen">
-        <img src="images/silent.png" alt="" id="silent" class="silent" loading="eager">
-        <img src="images/talking.gif" alt="" id="talking" class="talking" loading="eager">
-        <img src="images/holding.png" alt="" id="holding" class="holding" loading="eager">
+        <img src="images/silent.png" alt="" id="silent" class="face silent" loading="eager">
+        <img src="images/talking.gif" alt="" id="talking" class="face talking" loading="eager">
+        <img src="images/holding.png" alt="" id="holding" class="face holding" loading="eager">
+        <img src="images/yelling.gif" alt="" id="yelling" class="face yelling" loading="eager">
+        <img src="images/yelling-holding.png" alt="" id="yelling-holding" class="face yelling-holding" loading="eager">
       </div>
 
       <div class="green-screen__bar">
